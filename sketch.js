@@ -85,7 +85,7 @@ class FlowerCluster {
         pop();
     }
 
-drawUmbel(rings, baseFlorets, radiusStep) {
+    drawUmbel(rings, baseFlorets, radiusStep) {
         // Central cluster of tiny florets
         stroke(100, 100, 100, 150);
         strokeWeight(0.6);
@@ -102,9 +102,9 @@ drawUmbel(rings, baseFlorets, radiusStep) {
             let florets = baseFlorets + ring * 3;
             let r = ring * radiusStep;
             for (let i = 0; i < florets; i++) {
-                let a = (360 / florets) * i + sin(this.t * 1.2 + i) * 1;
-                let fx = cos(a) * r + random(-0.5, 0.5);
-                let fy = sin(a) * r + random(-0.5, 0.5);
+                let a = (360 / florets) * i + sin(this.t * 0.4 + i) * 0.5;
+                let fx = cos(a) * r + (noise(this.t * 0.5 + i) - 0.5) * 0.4;
+                let fy = sin(a) * r + (noise(this.t * 0.5 + i + 100) - 0.5) * 0.4;
                 push();
                 translate(fx, fy);
                 if (ring === rings) {
