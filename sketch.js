@@ -51,11 +51,13 @@ class FlowerCluster {
     for (let r = 1; r <= rings; r++) {
       let petals = r * 12;
       let ringRadius = r * 6;
+      // All flowers in the same ring share a size that grows with the ring index
+      let flowerSize = map(r, 1, rings, 0.8, 1.8);
       for (let i = 0; i < petals; i++) {
         let theta = (360 / petals) * i + random(-1, 1);
         let fx = ringRadius * cos(theta);
         let fy = ringRadius * sin(theta);
-        this.flowerHeads.push(createVector(fx, fy));
+        this.flowerHeads.push({ x: fx, y: fy, size: flowerSize });
       }
     }
   }
@@ -92,18 +94,18 @@ class FlowerCluster {
       strokeWeight(0.5);
       line(0, 0, head.x, head.y);
 
-      // Mini flower
+      // Mini flower scaled based on its ring
       push();
       translate(head.x, head.y);
       rotate(frameCount * 0.1 + this.offset);
       stroke(50);
       fill(255);
-      ellipse(0, 0, 1.5, 1.5);
+      ellipse(0, 0, 1.5 * head.size, 1.5 * head.size);
       for (let i = 0; i < 5; i++) {
         let a = i * 72;
-        let px = 3 * cos(a);
-        let py = 3 * sin(a);
-        ellipse(px, py, 1.5, 1.5);
+        let px = 3 * head.size * cos(a);
+        let py = 3 * head.size * sin(a);
+        ellipse(px, py, 1.5 * head.size, 1.5 * head.size);
       }
       pop();
     }
